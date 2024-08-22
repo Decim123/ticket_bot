@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="submit"],
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #ff6600;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff4500;
+        }
+        button {
+            cursor: pointer;
+        }
+        .excel-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .excel-button:hover {
+            background-color: #218838;
+        }
+        .clear-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .clear-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+    <script>
+        function confirmAndClearDB() {
+            if (confirm('Вы уверены, что хотите очистить эту БД? Убедитесь, что сохранили её в Excel формате перед этим.')) {
+                window.location.href = '/clear_users_db';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <form method="POST">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" value="{{ settings[0] }}" required>
+
+        <label for="tickets_count">Количество билетов:</label>
+        <input type="number" id="tickets_count" name="tickets_count" value="{{ settings[1] }}" required>
+
+        <label for="tickets_price">Цена билета:</label>
+        <input type="number" step="0.01" id="tickets_price" name="tickets_price" value="{{ settings[2] }}" required>
+
+        <label for="date">Дата окончания розыгрыша:</label>
+        <input type="date" id="date" name="date" value="{{ settings[3] }}" required>
+
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <button class="excel-button" onclick="window.location.href='/download_excel'">Скачать Excel</button>
+    <button class="clear-button" onclick="confirmAndClearDB()">Очистить базу данных пользователей</button>
+</body>
+</html>

@@ -1,0 +1,6 @@
+flask
+aiogram
+asyncio
+aiocryptopay
+Flask[async]
+requests
