@@ -27,7 +27,7 @@ router = Router()
 crypto_pay = AioCryptoPay(token=CRYPTO_PAY_API_TOKEN, network=Networks.MAIN_NET)
 
 # URL для кнопок
-url = 'https://fa1c-176-213-104-154.ngrok-free.app'
+url = 'https://pay-cheese.fun/'
 price_ton = '0.01'
 
 # Лексикон для сообщений
