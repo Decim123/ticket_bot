@@ -28,7 +28,6 @@ crypto_pay = AioCryptoPay(token=CRYPTO_PAY_API_TOKEN, network=Networks.MAIN_NET)
 
 # URL для кнопок
 url = 'https://pay-cheese.fun/'
-price_ton = '0.01'
 
 # Лексикон для сообщений
 LEXICON_EN = {
@@ -106,6 +105,14 @@ def get_admin_password():
     conn.close()
     return password
 
+def price_ton():
+    conn = sqlite3.connect('setting.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT tickets_price FROM settings')
+    price = cursor.fetchone()[0]
+    conn.close()
+    return price
+
 @app.route('/')
 def index():
     user_id = request.args.get('user_id')
@@ -154,7 +161,7 @@ def index():
         if invoice_url is None and status == 'check':
             invoice = run_async(crypto_pay.create_invoice(
                 asset='TON',
-                amount=price_ton,
+                amount=price_ton(),
                 description="Оплата за доступ",
                 payload=str(user_id),
                 paid_btn_name="openBot",
@@ -200,7 +207,7 @@ def check_status(tg_id):
         print("Creating invoice...")
         invoice = run_async(crypto_pay.create_invoice(
             asset='TON',
-            amount=price_ton,
+            amount=price_ton(),
             description="Оплата за доступ",
             payload=str(tg_id),
             paid_btn_name="openBot",
@@ -240,7 +247,7 @@ def buy_now(tg_id):
                 print("Creating invoice...")
                 invoice = await crypto_pay.create_invoice(
                     asset='TON',
-                    amount=price_ton,
+                    amount=price_ton(),
                     description="Оплата за доступ",
                     payload=str(tg_id),
                     paid_btn_name="openBot",
