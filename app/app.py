@@ -58,7 +58,7 @@ def create_users_table():
     conn.close()
 
 def create_settings_db():
-    conn = sqlite3.connect('setting.db')
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     cursor = conn.cursor()
     
     cursor.execute('''
@@ -89,7 +89,7 @@ create_settings_db()
 
 # Функция для получения пароля из базы данных
 def get_admin_password():
-    conn = sqlite3.connect('setting.db')
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute('SELECT password FROM settings')
     password = cursor.fetchone()[0]
@@ -97,7 +97,7 @@ def get_admin_password():
     return password
 
 def price_ton():
-    conn = sqlite3.connect('setting.db')
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute('SELECT tickets_price FROM settings')
     price = cursor.fetchone()[0]
@@ -109,7 +109,7 @@ async def index():
     user_id = request.args.get('user_id')
     
     # Подключаемся к БД settings
-    settings_conn = sqlite3.connect('setting.db')
+    settings_conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     settings_cursor = settings_conn.cursor()
     
     # Извлекаем данные из таблицы settings
@@ -304,7 +304,7 @@ async def check_payment(tg_id):
 async def admin():
     admin_pass = request.args.get('pass')
 
-    conn = sqlite3.connect('setting.db')
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     cursor = conn.cursor()
 
     # Проверяем пароль
@@ -340,7 +340,7 @@ async def admin():
 @app.route('/download_excel', methods=['GET'])
 async def download_excel():
     # Подключаемся к базе данных settings
-    settings_conn = sqlite3.connect('setting.db')
+    settings_conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     settings_cursor = settings_conn.cursor()
     settings_cursor.execute('SELECT * FROM settings')
     settings = settings_cursor.fetchone()
