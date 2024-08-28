@@ -39,11 +39,23 @@
 
     <p class="raffle-date">{{ settings['date'] }}</p> <!-- Дата окончания розыгрыша -->
 
+    <!-- Контейнер для вывода логов -->
+    <div id="log-container" style="white-space: pre-wrap; background-color: #f4f4f4; padding: 10px; border: 1px solid #ccc; max-height: 200px; overflow-y: auto;"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
+        // Функция для вывода логов на экран
+        function logToScreen(message) {
+            console.log(message);
+            const logContainer = document.getElementById('log-container');
+            logContainer.textContent += message + '\n';
+        }
+
+        logToScreen('Script started');
+
         const tg = window.Telegram.WebApp;
         tg.setHeaderColor("#000000");
         tg.expand();
@@ -57,17 +69,20 @@
             const user = tg.initDataUnsafe.user;
             const userId = user.id;
             const username = user.username ? `@${user.username}` : '';
-        
+
+            logToScreen('Fetching status for user: ' + username);
+
             fetch(`/check_status/${userId}?username=${encodeURIComponent(username)}`)
                 .then(response => response.json())
                 .then(data => {
+                    logToScreen('Status: ' + data.status);
                     if (data.status === 'suc') {
                         if (buyButton) buyButton.style.display = 'none';
                         if (checkPaymentButton) checkPaymentButton.style.display = 'none';
                         statusMessage.textContent = 'Вы участвуете!';
-        
+
                         const fullText = `Welcome, ${user.username || user.first_name}!`;
-        
+
                         usernameElement.innerHTML = '';
                         for (let i = 0; i < fullText.length; i++) {
                             const span = document.createElement('span');
@@ -80,24 +95,29 @@
                         statusMessage.textContent = 'Сыр закончился';
                     } else {
                         usernameElement.textContent = `Welcome, ${user.username || user.first_name}!`;
-        
+
                         if (buyButton) {
                             buyButton.addEventListener('click', () => {
+                                logToScreen('Buy button clicked.');
                                 if (data.invoice_url) {
+                                    logToScreen('Redirecting to invoice: ' + data.invoice_url);
                                     window.location.href = data.invoice_url;
                                 } else {
+                                    logToScreen('No invoice URL, reloading page.');
                                     window.location.reload();
                                 }
                             });
                         }
-        
+
                         if (checkPaymentButton) {
                             checkPaymentButton.addEventListener('click', () => {
+                                logToScreen('Checking payment status...');
                                 fetch(`/check_payment/${userId}`, {
                                     method: 'POST'
                                 })
                                 .then(response => response.json())
                                 .then(data => {
+                                    logToScreen('Payment check response: ' + JSON.stringify(data));
                                     if (data.status === 'suc') {
                                         statusMessage.textContent = 'Оплачено! Страница обновляется...';
                                         setTimeout(() => {
@@ -106,16 +126,21 @@
                                     } else if (data.status === 'not_paid') {
                                         statusMessage.textContent = 'Не оплачено';
                                     }
+                                })
+                                .catch(error => {
+                                    logToScreen('Error checking payment: ' + error);
                                 });
                             });
                         }
                     }
                 })
-                .catch(() => {
+                .catch(error => {
+                    logToScreen('Error fetching status: ' + error);
                     statusMessage.textContent = 'Сыр закончился';
                 });
-        }        
+        }
 
+        // 3D-модель и анимация
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -140,7 +165,7 @@
             camera.position.z = 5;
             camera.position.y = 1;
         }, undefined, function (error) {
-            console.error('Error loading model:', error);
+            logToScreen('Error loading model: ' + error);
         });
 
         function animate() {
