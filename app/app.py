@@ -10,9 +10,8 @@ from aiogram import Bot, Dispatcher, types, Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.storage.memory import MemoryStorage
-from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
+from quart import Quart, render_template, request, jsonify, redirect, url_for, send_file
 from concurrent.futures import ThreadPoolExecutor
-
 
 # Задаем токены вашего бота и Crypto Pay API
 TELEGRAM_TOKEN = '7156172309:AAHfsAbC2fdefm2HxCuNQ3PT2rcOE4giuuk'
@@ -34,8 +33,8 @@ LEXICON_EN = {
     '/start': 'Бесплатный сыр только в мышеловке'
 }
 
-# Инициализация Flask-приложения
-app = Flask(__name__)
+# Инициализация Quart-приложения
+app = Quart(__name__)
 executor = ThreadPoolExecutor()
 
 def get_db_connection():
@@ -88,14 +87,6 @@ def create_settings_db():
 create_users_table()
 create_settings_db()
 
-def run_async(coro):
-    """Запуск асинхронного корутины в отдельном потоке"""
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    result = loop.run_until_complete(coro)
-    loop.close()
-    return result
-
 # Функция для получения пароля из базы данных
 def get_admin_password():
     conn = sqlite3.connect('setting.db')
@@ -114,7 +105,7 @@ def price_ton():
     return price
 
 @app.route('/')
-def index():
+async def index():
     user_id = request.args.get('user_id')
     
     # Подключаемся к БД settings
@@ -159,26 +150,26 @@ def index():
             invoice_url = user['invoice_url']
 
         if invoice_url is None and status == 'check':
-            invoice = run_async(crypto_pay.create_invoice(
+            invoice = await crypto_pay.create_invoice(
                 asset='TON',
                 amount=price_ton(),
                 description="Оплата за доступ",
                 payload=str(user_id),
                 paid_btn_name="openBot",
                 paid_btn_url='https://t.me/pay_cheese_bot'
-            ))
+            )
             invoice_url = invoice.bot_invoice_url
             invoice_id = invoice.invoice_id
             conn.execute('UPDATE users SET invoice_url = ?, invoice_id = ? WHERE tg_id = ?', (invoice_url, invoice_id, user_id))
             conn.commit()
 
         conn.close()
-        return render_template('index.html', invoice_url=invoice_url, status=status, settings=settings_data)
+        return await render_template('index.html', invoice_url=invoice_url, status=status, settings=settings_data)
     
-    return render_template('index.html', settings=settings_data)
+    return await render_template('index.html', settings=settings_data)
 
 @app.route('/check_status/<int:tg_id>', methods=['GET'])
-def check_status(tg_id):
+async def check_status(tg_id):
     print(f"Received tg_id for status check: {tg_id}")
     username = request.args.get('username', '')
     conn = get_db_connection()
@@ -194,25 +185,22 @@ def check_status(tg_id):
         status = user['status']
         invoice_url = user['invoice_url']
         # Проверка на наличие username и обновление только при необходимости
-        try:
-            if user.get('username') != username:
-                conn.execute('UPDATE users SET username = ? WHERE tg_id = ?', (username, tg_id))
-                conn.commit()
-        except:
-            pass
+        if user['username'] != username:
+            conn.execute('UPDATE users SET username = ? WHERE tg_id = ?', (username, tg_id))
+            conn.commit()
 
         print(f"User status: {status}")
 
     if invoice_url is None and status == 'check':
         print("Creating invoice...")
-        invoice = run_async(crypto_pay.create_invoice(
+        invoice = await crypto_pay.create_invoice(
             asset='TON',
             amount=price_ton(),
             description="Оплата за доступ",
             payload=str(tg_id),
             paid_btn_name="openBot",
             paid_btn_url='https://t.me/pay_cheese_bot'
-        ))
+        )
         print(invoice)
         invoice_url = invoice.mini_app_invoice_url
         invoice_id = invoice.invoice_id  # Получаем invoice_id
@@ -224,53 +212,48 @@ def check_status(tg_id):
     return jsonify({'status': status, 'invoice_url': invoice_url})
 
 @app.route('/buy_now/<int:tg_id>', methods=['POST'])
-def buy_now(tg_id):
+async def buy_now(tg_id):
     print(f"Received tg_id for purchase: {tg_id}")
 
-    async def process_buy():
-        try:
-            conn = get_db_connection()
-            user = conn.execute('SELECT * FROM users WHERE tg_id = ?', (tg_id,)).fetchone()
+    try:
+        conn = get_db_connection()
+        user = conn.execute('SELECT * FROM users WHERE tg_id = ?', (tg_id,)).fetchone()
 
-            if user:
-                status = user['status']
-                print(f"User found in DB with status: {status}")
-            else:
-                print("User not found in DB, inserting new user with 'check' status.")
-                conn.execute('INSERT INTO users (tg_id, status) VALUES (?, ?)', (tg_id, 'check'))
-                conn.commit()
-                status = 'check'
+        if user:
+            status = user['status']
+            print(f"User found in DB with status: {status}")
+        else:
+            print("User not found in DB, inserting new user with 'check' status.")
+            conn.execute('INSERT INTO users (tg_id, status) VALUES (?, ?)', (tg_id, 'check'))
+            conn.commit()
+            status = 'check'
 
-            conn.close()
+        conn.close()
 
-            if status == 'check':
-                print("Creating invoice...")
-                invoice = await crypto_pay.create_invoice(
-                    asset='TON',
-                    amount=price_ton(),
-                    description="Оплата за доступ",
-                    payload=str(tg_id),
-                    paid_btn_name="openBot",
-                    paid_btn_url='https://t.me/pay_cheese_bot'
-                )
-                print(f"Invoice created: {invoice.web_app_invoice_url}")
-                invoice_url = invoice.web_app_invoice_url
-                invoice_id = invoice.invoice_id  # Получаем invoice_id
-                return {'invoice_url': invoice_url, 'invoice_id': invoice_id}
-            else:
-                print("User already has a valid status.")
-                return {'error': 'User already has a valid status'}
-        
-        except Exception as e:
-            print(f"Error processing payment for tg_id {tg_id}: {e}")
-            return {'error': f'Unable to process your request: {e}'}
-
-    result = run_async(process_buy())
+        if status == 'check':
+            print("Creating invoice...")
+            invoice = await crypto_pay.create_invoice(
+                asset='TON',
+                amount=price_ton(),
+                description="Оплата за доступ",
+                payload=str(tg_id),
+                paid_btn_name="openBot",
+                paid_btn_url='https://t.me/pay_cheese_bot'
+            )
+            print(f"Invoice created: {invoice.web_app_invoice_url}")
+            invoice_url = invoice.web_app_invoice_url
+            invoice_id = invoice.invoice_id  # Получаем invoice_id
+            return jsonify({'invoice_url': invoice_url, 'invoice_id': invoice_id})
+        else:
+            print("User already has a valid status.")
+            return jsonify({'error': 'User already has a valid status'})
     
-    return jsonify(result)
+    except Exception as e:
+        print(f"Error processing payment for tg_id {tg_id}: {e}")
+        return jsonify({'error': f'Unable to process your request: {e}'})
 
 @app.route('/check_payment/<int:tg_id>', methods=['POST'])
-def check_payment(tg_id):
+async def check_payment(tg_id):
     try:
         conn = get_db_connection()
         user = conn.execute('SELECT status, invoice_url, invoice_id FROM users WHERE tg_id = ?', (tg_id,)).fetchone()
@@ -286,7 +269,7 @@ def check_payment(tg_id):
         # Логируем параметры запроса
         print(f"Checking payment status for invoice_id: {invoice_id}")
 
-        response = requests.post(
+        response = await asyncio.to_thread(requests.post,
             'https://pay.crypt.bot/api/getInvoices',
             headers={'Crypto-Pay-API-Token': CRYPTO_PAY_API_TOKEN},
             json={'invoice_ids': [invoice_id]}
@@ -318,7 +301,7 @@ def check_payment(tg_id):
         return jsonify({'error': str(e)})
 
 @app.route('/admin', methods=['GET', 'POST'])
-def admin():
+async def admin():
     admin_pass = request.args.get('pass')
 
     conn = sqlite3.connect('setting.db')
@@ -352,10 +335,10 @@ def admin():
     settings = cursor.fetchone()
     conn.close()
 
-    return render_template('admin.html', settings=settings)
+    return await render_template('admin.html', settings=settings)
 
 @app.route('/download_excel', methods=['GET'])
-def download_excel():
+async def download_excel():
     # Подключаемся к базе данных settings
     settings_conn = sqlite3.connect('setting.db')
     settings_cursor = settings_conn.cursor()
@@ -403,7 +386,7 @@ def download_excel():
     filename = f"{settings[0]}.xlsx"
 
     # Отправляем файл пользователю
-    return send_file(
+    return await send_file(
         file_stream,
         as_attachment=True,
         download_name=filename,
@@ -411,7 +394,7 @@ def download_excel():
     )
 
 @app.route('/clear_users_db', methods=['GET'])
-def clear_users_db():
+async def clear_users_db():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('DELETE FROM users')  # Удаляем все записи из таблицы users
@@ -464,11 +447,11 @@ async def main():
     dp.include_router(router)
     await dp.start_polling(bot)
 
-def start_flask():
+def start_quart():
     app.run(host='0.0.0.0', port=5000, debug=False)
 
 if __name__ == '__main__':
-    flask_process = Process(target=start_flask)
-    flask_process.start()
+    quart_process = Process(target=start_quart)
+    quart_process.start()
     asyncio.run(main())
-    flask_process.join()
+    quart_process.join()
