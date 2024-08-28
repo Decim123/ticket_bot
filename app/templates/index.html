@@ -52,6 +52,7 @@
             console.log(message);
             const logContainer = document.getElementById('log-container');
             logContainer.textContent += message + '\n';
+            logContainer.scrollTop = logContainer.scrollHeight; // Прокручиваем вниз к новому сообщению
         }
 
         logToScreen('Script started');
