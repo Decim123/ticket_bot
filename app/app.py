@@ -315,10 +315,10 @@ async def admin():
         return redirect(url_for('index'))
 
     if request.method == 'POST':
-        name = request.form['name']
-        tickets_count = int(request.form['tickets_count'])
-        tickets_price = float(request.form['tickets_price'])
-        date = request.form['date']
+        name = (await request.form)['name']
+        tickets_count = int((await request.form)['tickets_count'])
+        tickets_price = float((await request.form)['tickets_price'])
+        date = (await request.form)['date']
 
         # Обновляем единственную запись в таблице
         cursor.execute('''
