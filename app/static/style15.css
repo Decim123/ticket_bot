@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #fff; /* Фон страницы такой же, как и у модели */
+    background-color: #f4f4f4; /* Возвращаем прежний фон страницы */
     margin: 0;
     padding: 0;
     overflow: hidden; /* Запрет прокрутки страницы */
@@ -13,7 +13,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100; /* Высокий z-index, чтобы модель была выше всех элементов */
+    z-index: 1; /* Задаем z-index чуть выше фона, но ниже других элементов */
     pointer-events: auto;
     background-color: transparent; /* Прозрачный фон */
 }
@@ -26,6 +26,7 @@ body {
     text-align: center;
     width: 100%;
     pointer-events: none;
+    z-index: 3; /* Устанавливаем z-index выше модели */
 }
 
 .raffle-name {
@@ -37,7 +38,7 @@ body {
     font-weight: bold;
     color: #666;
     text-align: center;
-    z-index: 2;
+    z-index: 3; /* Устанавливаем z-index выше модели */
     pointer-events: none;
 }
 
@@ -48,7 +49,7 @@ body {
     font-size: 50% !important;
     color: #666;
     margin: 5px 0;
-    z-index: 2;
+    z-index: 3;
     pointer-events: none;
 }
 
@@ -60,13 +61,13 @@ body {
     font-size: 70% !important;
     color: #666;
     margin: 0;
-    z-index: 2;
+    z-index: 3;
 }
 
 .content {
     margin-top: -60vh;
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 .content h1 {
@@ -94,7 +95,7 @@ button {
     text-align: center;
     text-decoration: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+    z-index: 3;
 }
 
 button:hover {
@@ -108,7 +109,7 @@ button:hover {
     color: #ffffffc0;
     border: solid #ff6600a9 1px;
     margin-top: 5%;
-    z-index: 2;
+    z-index: 3;
 }
 
 .secondary-button:hover {
@@ -143,7 +144,7 @@ button:hover {
     display: inline-block;
     animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
     animation-delay: calc(0.1s * var(--i));
-    z-index: 2;
+    z-index: 3;
 }
 
 .status-suc h1 {
@@ -163,7 +164,7 @@ button:hover {
     overflow: hidden;
     height: 0.5vh;
     margin: 0;
-    z-index: 2;
+    z-index: 3;
 }
 
 .progress-bar {
@@ -171,7 +172,7 @@ button:hover {
     height: 100%;
     background-color: #e0e0e0;
     border-radius: 10px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .progress {
@@ -179,7 +180,7 @@ button:hover {
     background-color: #ff6600;
     width: 0%;
     transition: width 0.5s ease-in-out;
-    z-index: 2;
+    z-index: 3;
 }
 
 #log-container {
