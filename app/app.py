@@ -386,12 +386,14 @@ async def download_excel():
     filename = f"{settings[0]}.xlsx"
 
     # Отправляем файл пользователю
-    return await send_file(
-        file_stream,
-        as_attachment=True,
-        download_filename=filename,
-        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response = await send_file(
+    file_stream,
+    as_attachment=True,
+    mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
+    response.headers["Content-Disposition"] = f"attachment; filename={filename}"
+    return response
+
 
 @app.route('/clear_users_db', methods=['GET'])
 async def clear_users_db():
