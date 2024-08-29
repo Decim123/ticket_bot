@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Платный сыр</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style13.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style14.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -14,44 +14,39 @@
     <div class="content">
         <div class="raffle-info">
         </div>
-        <h2 class="raffle-name">{{ settings['name'] }}</h2> <!-- Название розыгрыша -->
+        <h2 class="raffle-name">{{ settings['name'] }}</h2>
         <h1 id="username"></h1>
         <p id="statusMessage"></p>
-        
-        <!-- Логика отображения кнопок или сообщения "Сыр закончился" -->
+
         {% if settings['remaining_tickets'] > 0 %}
-            <div><button id="buyButton">{{ settings['tickets_price'] }} TON</button></div> <!-- Цена билета -->
+            <div><button id="buyButton">{{ settings['tickets_price'] }} TON</button></div>
             <div><button id="checkPaymentButton" class="secondary-button">Проверить</button></div>
         {% else %}
             <p id="statusMessage">Сыр закончился</p>
         {% endif %}
     </div>
-    
-    <!-- Количество билетов -->
+
     <p class="raffle-tickets">{{ settings['remaining_tickets'] }} / {{ settings['tickets_count'] }}</p>
-    <!-- Прогресс-бар -->
     <div class="progress-bar-container">
         <div class="progress-bar">
             <div class="progress" style="width: {{ (settings['remaining_tickets'] / settings['tickets_count']) * 100 }}%;"></div>
         </div>
     </div>
 
-    <p class="raffle-date">{{ settings['date'] }}</p> <!-- Дата окончания розыгрыша -->
+    <p class="raffle-date">{{ settings['date'] }}</p>
 
-    <!-- Контейнер для вывода логов -->
-    <div id="log-container" style="white-space: pre-wrap; background-color: #f4f4f4; padding: 10px; border: 1px solid #ccc; max-height: 200px; overflow-y: auto;"></div>
+    <div id="log-container"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
-        // Функция для вывода логов на экран
         function logToScreen(message) {
             console.log(message);
             const logContainer = document.getElementById('log-container');
             logContainer.textContent += message + '\n';
-            logContainer.scrollTop = logContainer.scrollHeight; // Прокручиваем вниз к новому сообщению
+            logContainer.scrollTop = logContainer.scrollHeight;
         }
 
         logToScreen('Script started');
@@ -144,15 +139,15 @@
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ alpha: true }); // Прозрачный фон
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('model-container').appendChild(renderer.domElement);
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.25;
-        controls.enableZoom = false;
-        controls.enablePan = false;
+        controls.enableZoom = true;
+        controls.enablePan = true;
         controls.minPolarAngle = Math.PI / 2;
         controls.maxPolarAngle = Math.PI / 2;
 
