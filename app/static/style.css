@@ -26,11 +26,15 @@ body {
 }
 
 .raffle-name {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 150%;
-    width: 100% !important;
     font-weight: bold;
     color: #666;
     margin: 0;
+    text-align: center;
 }
 
 .raffle-date {
