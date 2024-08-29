@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Платный сыр</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style8.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style9.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -13,9 +13,8 @@
 
     <div class="content">
         <div class="raffle-info">
-            <h2 class="raffle-name">{{ settings['name'] }}</h2> <!-- Название розыгрыша -->
         </div>
-
+        <h2 class="raffle-name">{{ settings['name'] }}</h2> <!-- Название розыгрыша -->
         <h1 id="username"></h1>
         <p id="statusMessage"></p>
         
