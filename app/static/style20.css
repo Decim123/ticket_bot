@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #fff; /* Возвращаем белый фон страницы */
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     overflow: hidden; /* Запрет прокрутки страницы */
@@ -10,12 +10,9 @@ body {
 #model-container {
     width: 100%;
     height: 50%;
-    background-color: #fff; /* Белый фон для модели */
-    z-index: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: auto;
+    background-color: #fff;
+    z-index: -10 !important; /* Сделаем этот элемент ниже по z-index */
+    position: relative; /* Убедимся, что он позиционируется относительно других элементов */
 }
 
 .raffle-info {
@@ -25,21 +22,18 @@ body {
     transform: translateX(-50%);
     text-align: center;
     width: 100%;
-    pointer-events: none;
-    z-index: 100;
 }
 
 .raffle-name {
-    position: fixed;
-    top: 2%;
+    position: absolute;
+    top: -40vh;
     left: 50%;
     transform: translateX(-50%);
     font-size: 150%;
     font-weight: bold;
     color: #666;
+    margin: 0;
     text-align: center;
-    pointer-events: none;
-    z-index: 100;
 }
 
 .raffle-date {
@@ -49,8 +43,7 @@ body {
     font-size: 50% !important;
     color: #666;
     margin: 5px 0;
-    z-index: 2;
-    pointer-events: none;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .raffle-tickets {
@@ -61,32 +54,27 @@ body {
     font-size: 70% !important;
     color: #666;
     margin: 0;
-    z-index: 2;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .content {
-    position: absolute;
     margin-top: -60vh;
     position: relative;
-    z-index: 100;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .content h1 {
-    position: absolute;
     font-size: 24px;
     color: #333;
-    z-index: 100;
 }
 
 .content p {
-    position: absolute;
     font-size: 18px;
     color: #666;
-    z-index: 100;
 }
 
+/* Общие стили для всех кнопок */
 button {
-    position: absolute;
     font-size: 18px;
     padding: 10px 20px;
     background-color: #ff6600;
@@ -100,33 +88,31 @@ button {
     text-align: center;
     text-decoration: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
+/* Эффект при наведении на кнопку */
 button:hover {
-    position: absolute;
     background-color: #ff4500;
-    z-index: 100;
 }
 
+/* Стили для кнопки "Проверить" */
 .secondary-button {
-    position: absolute;
     padding: 5px 10px;
     font-size: 12px;
     background-color: #cccccc00;
     color: #ffffffc0;
     border: solid #ff6600a9 1px;
     margin-top: 5%;
-    z-index: 100;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .secondary-button:hover {
-    position: absolute;
     background-color: #ff6600;
     color: #fff;
-    z-index: 100;
 }
 
+/* Анимация для подпрыгивания символов */
 @keyframes bounce {
     0%, 100% {
         transform: translateY(0);
@@ -136,6 +122,7 @@ button:hover {
     }
 }
 
+/* Анимация для переливания цвета */
 @keyframes colorChange {
     0% {
         color: #ff6600;
@@ -148,19 +135,20 @@ button:hover {
     }
 }
 
+/* Применяем анимации к каждому символу */
 .bounce-text span {
-    position: absolute;
     display: inline-block;
     animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
     animation-delay: calc(0.1s * var(--i));
-    z-index: 100;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
+/* Цвет текста при статусе suc */
 .status-suc h1 {
-    position: absolute;
     color: #ff6600;
 }
 
+/* Стили для контейнера прогресс-бара */
 .progress-bar-container {
     display: flex;
     width: 80%;
@@ -173,25 +161,28 @@ button:hover {
     overflow: hidden;
     height: 0.5vh;
     margin: 0;
-    z-index: 100;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
+/* Стили для прогресс-бара */
 .progress-bar {
     width: 100%;
     height: 100%;
     background-color: #e0e0e0;
     border-radius: 10px;
-    z-index: 2;
+    z-index: 3; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
+/* Стили для заполненной части прогресс-бара */
 .progress {
     height: 100%;
     background-color: #ff6600;
-    width: 0%;
+    width: 0%; /* Динамически обновляемая ширина */
     transition: width 0.5s ease-in-out;
-    z-index: 3;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
+/* Стили для контейнера с логами */
 #log-container {
     white-space: pre-wrap;
     background-color: #f4f4f4;
@@ -199,7 +190,7 @@ button:hover {
     border: 1px solid #ccc;
     max-height: 200px;
     overflow-y: auto;
-    z-index: 1000000;
+    z-index: 1000000; /* Высокий z-index, чтобы он перекрывал все остальные элементы */
     position: relative;
     display: none;
 }
