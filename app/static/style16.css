@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f4f4; /* Возвращаем прежний фон страницы */
+    background-color: #fff; /* Возвращаем белый фон страницы */
     margin: 0;
     padding: 0;
     overflow: hidden; /* Запрет прокрутки страницы */
@@ -10,12 +10,12 @@ body {
 #model-container {
     width: 100%;
     height: 50%;
+    background-color: #fff; /* Белый фон для модели */
+    z-index: 1;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* Задаем z-index чуть выше фона, но ниже других элементов */
     pointer-events: auto;
-    background-color: transparent; /* Прозрачный фон */
 }
 
 .raffle-info {
@@ -26,7 +26,6 @@ body {
     text-align: center;
     width: 100%;
     pointer-events: none;
-    z-index: 3; /* Устанавливаем z-index выше модели */
 }
 
 .raffle-name {
@@ -38,7 +37,7 @@ body {
     font-weight: bold;
     color: #666;
     text-align: center;
-    z-index: 3; /* Устанавливаем z-index выше модели */
+    z-index: 2;
     pointer-events: none;
 }
 
@@ -49,7 +48,7 @@ body {
     font-size: 50% !important;
     color: #666;
     margin: 5px 0;
-    z-index: 3;
+    z-index: 2;
     pointer-events: none;
 }
 
@@ -61,13 +60,13 @@ body {
     font-size: 70% !important;
     color: #666;
     margin: 0;
-    z-index: 3;
+    z-index: 2;
 }
 
 .content {
     margin-top: -60vh;
     position: relative;
-    z-index: 3;
+    z-index: 2;
 }
 
 .content h1 {
@@ -80,7 +79,6 @@ body {
     color: #666;
 }
 
-/* Общие стили для всех кнопок */
 button {
     font-size: 18px;
     padding: 10px 20px;
@@ -117,7 +115,6 @@ button:hover {
     color: #fff;
 }
 
-/* Анимация для подпрыгивания символов */
 @keyframes bounce {
     0%, 100% {
         transform: translateY(0);
@@ -127,7 +124,6 @@ button:hover {
     }
 }
 
-/* Анимация для переливания цвета */
 @keyframes colorChange {
     0% {
         color: #ff6600;
@@ -151,7 +147,6 @@ button:hover {
     color: #ff6600;
 }
 
-/* Стили для контейнера прогресс-бара */
 .progress-bar-container {
     display: flex;
     width: 80%;
@@ -164,7 +159,7 @@ button:hover {
     overflow: hidden;
     height: 0.5vh;
     margin: 0;
-    z-index: 3;
+    z-index: 2;
 }
 
 .progress-bar {
@@ -172,7 +167,7 @@ button:hover {
     height: 100%;
     background-color: #e0e0e0;
     border-radius: 10px;
-    z-index: 3;
+    z-index: 2;
 }
 
 .progress {
