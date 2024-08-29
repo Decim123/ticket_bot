@@ -11,7 +11,7 @@ body {
     width: 100%;
     height: 50%;
     background-color: #fff; /* Белый фон для модели */
-    z-index: 1;
+    z-index: 0;
     position: absolute;
     top: 0;
     left: 0;
