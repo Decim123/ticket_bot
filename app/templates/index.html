@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Платный сыр</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style20.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style21.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -68,11 +68,11 @@
         if (tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
             const userId = user.id;
-            const username = user.username ? @${user.username} : '';
+            const username = user.username ? `@${user.username}` : '';
 
             logToScreen('Fetching status for user: ' + username);
 
-            fetch(/check_status/${userId}?username=${encodeURIComponent(username)})
+            fetch(`/check_status/${userId}?username=${encodeURIComponent(username)}`)
                 .then(response => response.json())
                 .then(data => {
                     logToScreen('Status: ' + data.status);
@@ -81,7 +81,7 @@
                         if (checkPaymentButton) checkPaymentButton.style.display = 'none';
                         statusMessage.textContent = 'Вы участвуете!';
 
-                        const fullText = Welcome, ${user.username || user.first_name}!;
+                        const fullText = `Welcome, ${user.username || user.first_name}!`;
 
                         usernameElement.innerHTML = '';
                         for (let i = 0; i < fullText.length; i++) {
@@ -94,7 +94,7 @@
                     } else if (data.status === 'no_tickets') {
                         statusMessage.textContent = 'Сыр закончился';
                     } else {
-                        usernameElement.textContent = Welcome, ${user.username || user.first_name}!;
+                        usernameElement.textContent = `Welcome, ${user.username || user.first_name}!`;
 
                         if (buyButton) {
                             buyButton.addEventListener('click', () => {
@@ -112,7 +112,7 @@
                         if (checkPaymentButton) {
                             checkPaymentButton.addEventListener('click', () => {
                                 logToScreen('Checking payment status...');
-                                fetch(/check_payment/${userId}, {
+                                fetch(`/check_payment/${userId}`, {
                                     method: 'POST'
                                 })
                                 .then(response => response.json())
