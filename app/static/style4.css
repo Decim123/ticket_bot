@@ -189,4 +189,5 @@ button:hover {
     overflow-y: auto;
     z-index: 1000000; /* Высокий z-index, чтобы он перекрывал все остальные элементы */
     position: relative;
+    display: none;
 }
