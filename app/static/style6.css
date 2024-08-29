@@ -15,14 +15,16 @@ body {
     position: relative; /* Убедимся, что он позиционируется относительно других элементов */
 }
 
-.raffle-info {
+.raffle-name {
     position: absolute;
-    top: 5%;
+    top: 2%;
     left: 50%;
     transform: translateX(-50%);
+    font-size: 150%;
+    font-weight: bold;
+    color: #666;
+    margin: 0;
     text-align: center;
-    width: 100%;
-    z-index: 3; /* Этот элемент еще выше, чтобы точно быть видимым */
 }
 
 .raffle-name {
