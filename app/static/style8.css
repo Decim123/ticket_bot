@@ -15,9 +15,18 @@ body {
     position: relative; /* Убедимся, что он позиционируется относительно других элементов */
 }
 
+.raffle-info {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
 .raffle-name {
     position: absolute;
-    top: -48%;
+    top: 2%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 150%;
@@ -25,14 +34,6 @@ body {
     color: #666;
     margin: 0;
     text-align: center;
-}
-
-.raffle-name {
-    font-size: 150%;
-    width: 100% !important;
-    font-weight: bold;
-    color: #666;
-    margin: 0;
 }
 
 .raffle-date {
