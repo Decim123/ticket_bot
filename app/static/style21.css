@@ -11,8 +11,9 @@ body {
     width: 100%;
     height: 50%;
     background-color: #fff;
-    z-index: -10 !important; /* Сделаем этот элемент ниже по z-index */
-    position: relative; /* Убедимся, что он позиционируется относительно других элементов */
+    z-index: -10 !important;
+    position: relative;
+    pointer-events: auto;
 }
 
 .raffle-info {
@@ -22,18 +23,20 @@ body {
     transform: translateX(-50%);
     text-align: center;
     width: 100%;
+    pointer-events: none;
 }
 
 .raffle-name {
-    position: absolute;
-    top: -40vh;
+    position: fixed;
+    top: 2%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 150%;
     font-weight: bold;
     color: #666;
-    margin: 0;
     text-align: center;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .raffle-date {
@@ -44,6 +47,7 @@ body {
     color: #666;
     margin: 5px 0;
     z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+    pointer-events: none;
 }
 
 .raffle-tickets {
@@ -177,7 +181,7 @@ button:hover {
 .progress {
     height: 100%;
     background-color: #ff6600;
-    width: 0%; /* Динамически обновляемая ширина */
+    width: 0%;
     transition: width 0.5s ease-in-out;
     z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
