@@ -389,7 +389,7 @@ async def download_excel():
     return await send_file(
         file_stream,
         as_attachment=True,
-        download_name=filename,
+        download_filename=filename,
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
