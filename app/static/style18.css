@@ -26,6 +26,7 @@ body {
     text-align: center;
     width: 100%;
     pointer-events: none;
+    z-index: 100;
 }
 
 .raffle-name {
@@ -37,8 +38,8 @@ body {
     font-weight: bold;
     color: #666;
     text-align: center;
-    z-index: 2;
     pointer-events: none;
+    z-index: 100;
 }
 
 .raffle-date {
@@ -66,17 +67,19 @@ body {
 .content {
     margin-top: -60vh;
     position: relative;
-    z-index: 2;
+    z-index: 100;
 }
 
 .content h1 {
     font-size: 24px;
     color: #333;
+    z-index: 100;
 }
 
 .content p {
     font-size: 18px;
     color: #666;
+    z-index: 100;
 }
 
 button {
@@ -93,11 +96,12 @@ button {
     text-align: center;
     text-decoration: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 3;
+    z-index: 100;
 }
 
 button:hover {
     background-color: #ff4500;
+    z-index: 100;
 }
 
 .secondary-button {
@@ -107,12 +111,13 @@ button:hover {
     color: #ffffffc0;
     border: solid #ff6600a9 1px;
     margin-top: 5%;
-    z-index: 3;
+    z-index: 100;
 }
 
 .secondary-button:hover {
     background-color: #ff6600;
     color: #fff;
+    z-index: 100;
 }
 
 @keyframes bounce {
@@ -140,7 +145,7 @@ button:hover {
     display: inline-block;
     animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
     animation-delay: calc(0.1s * var(--i));
-    z-index: 3;
+    z-index: 100;
 }
 
 .status-suc h1 {
@@ -159,7 +164,7 @@ button:hover {
     overflow: hidden;
     height: 0.5vh;
     margin: 0;
-    z-index: 2;
+    z-index: 100;
 }
 
 .progress-bar {
