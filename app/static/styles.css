@@ -11,6 +11,8 @@ body {
     width: 100%;
     height: 50%;
     background-color: #fff;
+    z-index: 1; /* Сделаем этот элемент ниже по z-index */
+    position: relative; /* Убедимся, что он позиционируется относительно других элементов */
 }
 
 .raffle-info {
@@ -20,6 +22,7 @@ body {
     transform: translateX(-50%);
     text-align: center;
     width: 100%;
+    z-index: 3; /* Этот элемент еще выше, чтобы точно быть видимым */
 }
 
 .raffle-name {
@@ -37,22 +40,24 @@ body {
     font-size: 50% !important;
     color: #666;
     margin: 5px 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
-
 .raffle-tickets {
-    position: absolute; /* Или fixed, если нужно закрепить элемент на экране при прокрутке */
-    bottom: 1%; /* Отступ от нижней части страницы */
+    position: absolute;
+    bottom: 1%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 70% !important;
     color: #666;
-    margin: 0; /* Убираем внешние отступы */
+    margin: 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
-
 .content {
-    margin-top: -60vh; /* Снижаем отступ сверху для текста и кнопок */
+    margin-top: -60vh;
+    position: relative;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .content h1 {
@@ -77,9 +82,10 @@ button {
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
-    text-align: center; /* Центрируем текст внутри кнопки */
-    text-decoration: none; /* Убираем подчеркивание текста */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Добавляем тень для кнопки */
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 /* Эффект при наведении на кнопку */
@@ -94,7 +100,8 @@ button:hover {
     background-color: #cccccc00;
     color: #ffffffc0;
     border: solid #ff6600a9 1px;
-    margin-top: 5%; /* Добавляем отступ между кнопками */
+    margin-top: 5%;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 .secondary-button:hover {
@@ -128,8 +135,9 @@ button:hover {
 /* Применяем анимации к каждому символу */
 .bounce-text span {
     display: inline-block;
-    animation: bounce 1s ease-in-out 5, colorChange 3s infinite; /* 5 циклов подпрыгивания и бесконечное переливание */
+    animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
     animation-delay: calc(0.1s * var(--i));
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 /* Цвет текста при статусе suc */
@@ -141,7 +149,7 @@ button:hover {
 .progress-bar-container {
     display: flex;
     width: 80%;
-    position: absolute; /* Или fixed, если нужно закрепить его на экране при прокрутке */
+    position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -149,14 +157,17 @@ button:hover {
     border-radius: 10px;
     overflow: hidden;
     height: 0.5vh;
-    margin: 0; /* Убираем внешний отступ, так как позиционирование задается через bottom */
+    margin: 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
 }
+
 /* Стили для прогресс-бара */
 .progress-bar {
     width: 100%;
     height: 100%;
     background-color: #e0e0e0;
     border-radius: 10px;
+    z-index: 3; /* Установим z-index выше, чтобы перекрыть фон */
 }
 
 /* Стили для заполненной части прогресс-бара */
@@ -165,4 +176,17 @@ button:hover {
     background-color: #ff6600;
     width: 0%; /* Динамически обновляемая ширина */
     transition: width 0.5s ease-in-out;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+/* Стили для контейнера с логами */
+#log-container {
+    white-space: pre-wrap;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10; /* Высокий z-index, чтобы он перекрывал все остальные элементы */
+    position: relative;
 }
