@@ -13,6 +13,7 @@ body {
     background-color: #fff;
     z-index: 1; /* Сделаем этот элемент ниже по z-index */
     position: relative; /* Убедимся, что он позиционируется относительно других элементов */
+    display: none;
 }
 
 .raffle-info {
