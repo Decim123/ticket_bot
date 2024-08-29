@@ -65,24 +65,28 @@ body {
 }
 
 .content {
+    position: absolute;
     margin-top: -60vh;
     position: relative;
     z-index: 100;
 }
 
 .content h1 {
+    position: absolute;
     font-size: 24px;
     color: #333;
     z-index: 100;
 }
 
 .content p {
+    position: absolute;
     font-size: 18px;
     color: #666;
     z-index: 100;
 }
 
 button {
+    position: absolute;
     font-size: 18px;
     padding: 10px 20px;
     background-color: #ff6600;
@@ -100,11 +104,13 @@ button {
 }
 
 button:hover {
+    position: absolute;
     background-color: #ff4500;
     z-index: 100;
 }
 
 .secondary-button {
+    position: absolute;
     padding: 5px 10px;
     font-size: 12px;
     background-color: #cccccc00;
@@ -115,6 +121,7 @@ button:hover {
 }
 
 .secondary-button:hover {
+    position: absolute;
     background-color: #ff6600;
     color: #fff;
     z-index: 100;
@@ -142,6 +149,7 @@ button:hover {
 }
 
 .bounce-text span {
+    position: absolute;
     display: inline-block;
     animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
     animation-delay: calc(0.1s * var(--i));
@@ -149,6 +157,7 @@ button:hover {
 }
 
 .status-suc h1 {
+    position: absolute;
     color: #ff6600;
 }
 
