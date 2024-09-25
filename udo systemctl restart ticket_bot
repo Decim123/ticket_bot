@@ -1,0 +1,123 @@
+Aug 22 14:55:54 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 22 14:55:54 65534.zetalink.ru systemd[115354]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 22 14:55:54 65534.zetalink.ru systemd[115354]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 22 14:55:54 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 22 14:55:54 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 20:59:25 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 20:59:25 65534.zetalink.ru systemd[129171]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 23 20:59:25 65534.zetalink.ru systemd[129171]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 23 20:59:25 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 23 20:59:25 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:03:01 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:03:01 65534.zetalink.ru systemd[129218]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 23 21:03:01 65534.zetalink.ru systemd[129218]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 23 21:03:01 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 23 21:03:01 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:03:48 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:03:48 65534.zetalink.ru systemd[129242]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 23 21:03:48 65534.zetalink.ru systemd[129242]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 23 21:03:48 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 23 21:03:48 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:09:57 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:09:57 65534.zetalink.ru systemd[129300]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 23 21:09:57 65534.zetalink.ru systemd[129300]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 23 21:09:57 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 23 21:09:57 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:11:14 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:11:14 65534.zetalink.ru systemd[129341]: ticket_bot.service: Failed to locate executable /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory
+Aug 23 21:11:14 65534.zetalink.ru systemd[129341]: [0;1;31m[0;1;39m[0;1;31mticket_bot.service: Failed at step EXEC spawning /var/www/ticket_bot/venv/bin/gunicorn: No such file or directory[0m
+Aug 23 21:11:14 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=203/EXEC[0m
+Aug 23 21:11:14 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:16:07 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:16:08 +0300] [129376] [INFO] Starting gunicorn 23.0.0
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:16:08 +0300] [129376] [INFO] Listening at: unix:/var/www/ticket_bot/ticket_bot.sock (129376)
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:16:08 +0300] [129376] [INFO] Using worker: sync
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129381]: [2024-08-23 21:16:08 +0300] [129381] [INFO] Booting worker with pid: 129381
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129382]: [2024-08-23 21:16:08 +0300] [129382] [INFO] Booting worker with pid: 129382
+Aug 23 21:16:08 65534.zetalink.ru gunicorn[129383]: [2024-08-23 21:16:08 +0300] [129383] [INFO] Booting worker with pid: 129383
+Aug 23 21:34:24 65534.zetalink.ru systemd[1]: Stopping gunicorn daemon for ticket_bot...
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129381]: [2024-08-23 21:34:24 +0300] [129381] [INFO] Worker exiting (pid: 129381)
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129382]: [2024-08-23 21:34:24 +0300] [129382] [INFO] Worker exiting (pid: 129382)
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129383]: [2024-08-23 21:34:24 +0300] [129383] [INFO] Worker exiting (pid: 129383)
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129381]: 0
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129381]: 0
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129382]: 0
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129383]: 0
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:34:24 +0300] [129376] [INFO] Handling signal: term
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:34:24 +0300] [129376] [ERROR] Worker (pid:129381) was sent SIGTERM!
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:34:24 +0300] [129376] [ERROR] Worker (pid:129383) was sent SIGTERM!
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:34:24 +0300] [129376] [ERROR] Worker (pid:129382) was sent SIGTERM!
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129376]: [2024-08-23 21:34:24 +0300] [129376] [INFO] Shutting down: Master
+Aug 23 21:34:24 65534.zetalink.ru systemd[1]: ticket_bot.service: Deactivated successfully.
+Aug 23 21:34:24 65534.zetalink.ru systemd[1]: Stopped gunicorn daemon for ticket_bot.
+Aug 23 21:34:24 65534.zetalink.ru systemd[1]: ticket_bot.service: Consumed 31.085s CPU time.
+Aug 23 21:34:24 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129397]: [2024-08-23 21:34:24 +0300] [129397] [INFO] Starting gunicorn 23.0.0
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129397]: [2024-08-23 21:34:24 +0300] [129397] [INFO] Listening at: unix:/var/www/ticket_bot/ticket_bot.sock (129397)
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129397]: [2024-08-23 21:34:24 +0300] [129397] [INFO] Using worker: sync
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129400]: [2024-08-23 21:34:24 +0300] [129400] [INFO] Booting worker with pid: 129400
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129401]: [2024-08-23 21:34:24 +0300] [129401] [INFO] Booting worker with pid: 129401
+Aug 23 21:34:24 65534.zetalink.ru gunicorn[129402]: [2024-08-23 21:34:24 +0300] [129402] [INFO] Booting worker with pid: 129402
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: Stopping gunicorn daemon for ticket_bot...
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: [2024-08-23 21:41:44 +0300] [129397] [INFO] Handling signal: term
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: Traceback (most recent call last):
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 223, in run
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129400]: [2024-08-23 21:41:44 +0300] [129400] [INFO] Worker exiting (pid: 129400)
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     handler()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 256, in handle_term
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129400]: 0
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     raise StopIteration
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: StopIteration
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: During handling of the above exception, another exception occurred:
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: Traceback (most recent call last):
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/bin/gunicorn", line 8, in <module>
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129402]: [2024-08-23 21:41:44 +0300] [129402] [INFO] Worker exiting (pid: 129402)
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     sys.exit(run())
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/app/wsgiapp.py", line 66, in run
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]", prog=prog).run()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129402]: 0
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 235, in run
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     super().run()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/app/base.py", line 71, in run
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     Arbiter(self).run()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 226, in run
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     self.halt()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 341, in halt
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     self.stop()
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 384, in stop
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     sock.close_sockets(self.LISTENERS, unlink)
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:   File "/var/www/ticket_bot/venv/lib/python3.10/site-packages/gunicorn/sock.py", line 212, in close_sockets
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]:     os.unlink(sock_name)
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129397]: PermissionError: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129401]: [2024-08-23 21:41:44 +0300] [129401] [INFO] Worker exiting (pid: 129401)
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=1/FAILURE[0m
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: Stopped gunicorn daemon for ticket_bot.
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: ticket_bot.service: Consumed 25.515s CPU time.
+Aug 23 21:41:44 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:44 +0300] [129547] [INFO] Starting gunicorn 23.0.0
+Aug 23 21:41:44 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:44 +0300] [129547] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:45 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:45 +0300] [129547] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:46 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:46 +0300] [129547] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:47 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:47 +0300] [129547] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:48 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:48 +0300] [129547] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:41:49 65534.zetalink.ru gunicorn[129547]: [2024-08-23 21:41:49 +0300] [129547] [ERROR] Can't connect to /var/www/ticket_bot/ticket_bot.sock
+Aug 23 21:41:49 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=1/FAILURE[0m
+Aug 23 21:41:49 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:42:19 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:42:20 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:20 +0300] [129558] [INFO] Starting gunicorn 23.0.0
+Aug 23 21:42:20 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:20 +0300] [129558] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:42:21 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:21 +0300] [129558] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:42:22 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:22 +0300] [129558] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:42:23 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:23 +0300] [129558] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:42:24 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:24 +0300] [129558] [ERROR] connection to /var/www/ticket_bot/ticket_bot.sock failed: [Errno 13] Permission denied: '/var/www/ticket_bot/ticket_bot.sock'
+Aug 23 21:42:25 65534.zetalink.ru gunicorn[129558]: [2024-08-23 21:42:25 +0300] [129558] [ERROR] Can't connect to /var/www/ticket_bot/ticket_bot.sock
+Aug 23 21:42:25 65534.zetalink.ru systemd[1]: [0;1;39m[0;1;31m[0;1;39mticket_bot.service: Main process exited, code=exited, status=1/FAILURE[0m
+Aug 23 21:42:25 65534.zetalink.ru systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mticket_bot.service: Failed with result 'exit-code'.[0m
+Aug 23 21:46:07 65534.zetalink.ru systemd[1]: Started gunicorn daemon for ticket_bot.
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129624]: [2024-08-23 21:46:07 +0300] [129624] [INFO] Starting gunicorn 23.0.0
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129624]: [2024-08-23 21:46:07 +0300] [129624] [INFO] Listening at: unix:/var/www/ticket_bot/ticket_bot.sock (129624)
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129624]: [2024-08-23 21:46:07 +0300] [129624] [INFO] Using worker: sync
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129625]: [2024-08-23 21:46:07 +0300] [129625] [INFO] Booting worker with pid: 129625
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129626]: [2024-08-23 21:46:07 +0300] [129626] [INFO] Booting worker with pid: 129626
+Aug 23 21:46:07 65534.zetalink.ru gunicorn[129627]: [2024-08-23 21:46:07 +0300] [129627] [INFO] Booting worker with pid: 129627
