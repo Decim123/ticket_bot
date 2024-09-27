@@ -64,13 +64,7 @@
             background-color: #c82333;
         }
     </style>
-    <script>
-        function confirmAndClearDB() {
-            if (confirm('Вы уверены, что хотите очистить эту БД? Убедитесь, что сохранили её в Excel формате перед этим.')) {
-                window.location.href = '/clear_users_db';
-            }
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>Admin Panel</h1>
@@ -92,5 +86,73 @@
 
     <button class="excel-button" onclick="window.location.href='/download_excel'">Скачать Excel</button>
     <button class="clear-button" onclick="confirmAndClearDB()">Очистить базу данных пользователей</button>
+
+    <form method="POST" action="/add_ad_integration">
+        <h2>Добавление рекламной интеграции</h2>
+    
+        <label for="ad_name">Название рекламной интеграции:</label>
+        <input type="text" id="ad_name" name="ad_name" placeholder="Введите название" required>
+    
+        <label for="ad_description">Подпись:</label>
+        <input type="text" id="ad_description" name="ad_description" placeholder="Введите подпись" required>
+    
+        <label for="ad">Ссылка:</label>
+        <input type="text" id="ad" name="ad" placeholder="Введите ссылку" required>
+
+        <input type="submit" value="Добавить интеграцию">
+    </form>
+    
+    <h1>Рекламa</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Подзаголовок</th>
+                <th>Ссылка</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ad in ads %}
+            <tr id="ad-{{ ad[0] }}">
+                <td>{{ ad[1] }}</td>
+                <td>{{ ad[2] }}</td>
+                <td><a href="{{ ad[3] }}" target="_blank">{{ ad[3] }}</a></td>
+                <td><button class="delete-button" data-ad-id="{{ ad[0] }}">Удалить</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Функция для удаления рекламы
+        $(document).on('click', '.delete-button', function() {
+            const adId = $(this).data('ad-id');
+
+            $.ajax({
+                url: '/delete_ad/' + adId,
+                type: 'POST',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#ad-' + adId).remove(); // Удаляем строку таблицы с рекламой
+                    } else {
+                        alert('Ошибка при удалении рекламы');
+                    }
+                },
+                error: function() {
+                    alert('Ошибка при запросе к серверу');
+                }
+            });
+        });
+        
+    </script>
+
+    <script>
+        function confirmAndClearDB() {
+            if (confirm('Вы уверены, что хотите очистить эту БД? Убедитесь, что сохранили её в Excel формате перед этим.')) {
+                window.location.href = '/clear_users_db';
+            }
+        }
+    </script>
 </body>
 </html>

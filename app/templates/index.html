@@ -4,40 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Платный сыр</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style21.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div id="model-container"></div>
-
     <div class="content">
+        <h1 id="username"></h1>
         <div class="raffle-info">
         </div>
-        <h2 class="raffle-name">{{ settings['name'] }}</h2> <!-- Название розыгрыша -->
-        <h1 id="username"></h1>
-        <p id="statusMessage"></p>
+        <h2 class="raffle-name">Платный сыр</h2> <!-- Название розыгрыша -->
         
+        
+        <!-- Количество билетов -->
+        <p class="raffle-tickets">{{ settings['remaining_tickets'] }} / {{ settings['tickets_count'] }}</p>
+        <!-- Прогресс-бар -->
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress" style="width: {{ (settings['remaining_tickets'] / settings['tickets_count']) * 100 }}%;"></div>
+            </div>
+        </div>
+
+        <p class="raffle-date">Дата завершения - {{ settings['date'] }}<br>или раньше, если будет набрано необходимое количство учасников</br></p> <!-- Дата окончания розыгрыша -->
+
         <!-- Логика отображения кнопок или сообщения "Сыр закончился" -->
+        <div class='price-block'>
+            <p class = 'price'>{{ settings['tickets_price'] }}</p>
+            <p class='network'>network ton</p>
+        </div>
         {% if settings['remaining_tickets'] > 0 %}
-            <div><button id="buyButton">{{ settings['tickets_price'] }} TON</button></div> <!-- Цена билета -->
-            <div><button id="checkPaymentButton" class="secondary-button">Проверить</button></div>
+            <div class='button-block'>
+                <div><button id="buyButton">pay</button></div>
+                <div><button id="checkPaymentButton" class="secondary-button">check</button><p id="statusMessage"></p></div>
+            </div>
         {% else %}
-            <p id="statusMessage">Сыр закончился</p>
+            <p id="stopMessage">Сыр закончился</p>
         {% endif %}
+        <p id='successMessage'>Я участвую!</p>
     </div>
     
-    <!-- Количество билетов -->
-    <p class="raffle-tickets">{{ settings['remaining_tickets'] }} / {{ settings['tickets_count'] }}</p>
-    <!-- Прогресс-бар -->
-    <div class="progress-bar-container">
-        <div class="progress-bar">
-            <div class="progress" style="width: {{ (settings['remaining_tickets'] / settings['tickets_count']) * 100 }}%;"></div>
-        </div>
+    <div class='link-block'>
+        {% for ad in ads %}
+        <a href={{ ad[3] }} class='link'>
+            <p>></p>
+            <h1>{{ ad[1] }}</h1>
+            <h2>{{ ad[2] }}</h2>
+        </a>
+        
+        {% endfor %}
     </div>
-
-    <p class="raffle-date">{{ settings['date'] }}</p> <!-- Дата окончания розыгрыша -->
-
+    
     <!-- Контейнер для вывода логов -->
     <div id="log-container" style="white-space: pre-wrap; background-color: #f4f4f4; padding: 10px; border: 1px solid #ccc; max-height: 200px; overflow-y: auto;"></div>
 
@@ -62,14 +79,26 @@
 
         const usernameElement = document.getElementById('username');
         const statusMessage = document.getElementById('statusMessage');
+        const successMessage = document.getElementById('successMessage');
+        const stopMessage = document.getElementById('stopMessage');
         const buyButton = document.getElementById('buyButton');
         const checkPaymentButton = document.getElementById('checkPaymentButton');
-
+        if (usernameElement) {
+            console.log('1 Element найден:', usernameElement);
+            
+        } else {
+            console.log('Element не найден');
+        }
+        if (successMessage) {
+            console.log('Element найден:', usernameElement);
+        } else {
+            console.log('Element не найден');
+        }
         if (tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
             const userId = user.id;
-            const username = user.username ? `@${user.username}` : '';
-
+            const username = user.username ? `${user.username}` : '';
+            usernameElement.textContent = username
             logToScreen('Fetching status for user: ' + username);
 
             fetch(`/check_status/${userId}?username=${encodeURIComponent(username)}`)
@@ -77,24 +106,31 @@
                 .then(data => {
                     logToScreen('Status: ' + data.status);
                     if (data.status === 'suc') {
+                        usernameElement.classList.add('bounce-text');
                         if (buyButton) buyButton.style.display = 'none';
                         if (checkPaymentButton) checkPaymentButton.style.display = 'none';
-                        statusMessage.textContent = 'Вы участвуете!';
-
-                        const fullText = `Welcome, ${user.username || user.first_name}!`;
-
-                        usernameElement.innerHTML = '';
+                        statusMessage.textContent = '';
+                        successMessage.textContent = 'Я участвую!';
+                        const fullText = `${user.username || user.first_name}`;
+                        if (fullText) {
+                            console.log('2 fullText найден:', fullText);
+                        } else {
+                            console.log('2 Element не найден');
+                        }
+                        usernameElement.innerHTML = ' ';
                         for (let i = 0; i < fullText.length; i++) {
                             const span = document.createElement('span');
                             span.textContent = fullText[i];
                             span.style.setProperty('--i', i);
                             usernameElement.appendChild(span);
                         }
-                        usernameElement.classList.add('bounce-text');
+                        
                     } else if (data.status === 'no_tickets') {
-                        statusMessage.textContent = 'Сыр закончился';
+                        statusMessage.textContent = '';
+                        stopMessage.textContent = 'Сыр закончился';
                     } else {
-                        usernameElement.textContent = `Welcome, ${user.username || user.first_name}!`;
+                        successMessage.textContent = 'Я не участвую!';
+                        usernameElement.textContent = `${user.username || user.first_name}`;
 
                         if (buyButton) {
                             buyButton.addEventListener('click', () => {
@@ -119,7 +155,7 @@
                                 .then(data => {
                                     logToScreen('Payment check response: ' + JSON.stringify(data));
                                     if (data.status === 'suc') {
-                                        statusMessage.textContent = 'Оплачено! Страница обновляется...';
+                                        statusMessage.textContent = 'Оплачено!';
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 2000);
@@ -136,47 +172,89 @@
                 })
                 .catch(error => {
                     logToScreen('Error fetching status: ' + error);
-                    statusMessage.textContent = 'Сыр закончился';
                 });
         }
 
-        // 3D-модель и анимация
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // 3D-модель и анимация
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('model-container').appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('model-container').appendChild(renderer.domElement);
 
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.25;
-        controls.enableZoom = false;
-        controls.enablePan = false;
-        controls.minPolarAngle = Math.PI / 2;
-        controls.maxPolarAngle = Math.PI / 2;
+    // Добавляем базовый свет
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, -10, 10).normalize();
+    scene.add(light);
 
-        let model;
-        const loader = new THREE.GLTFLoader();
-        loader.load('{{ url_for('static', filename='model.glb') }}', function (gltf) {
-            model = gltf.scene;
-            scene.add(model);
-            model.position.y += 1;
-            camera.position.z = 5;
-            camera.position.y = 1;
-        }, undefined, function (error) {
-            logToScreen('Error loading model: ' + error);
-        });
+    const ambientLight = new THREE.AmbientLight(0x404040); // Мягкое общее освещение
+    scene.add(ambientLight);
+    // Добавляем точечный свет
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100); // Белый свет, интенсивность 1, радиус освещения 100
+    pointLight.position.set(5, 5, 5); // Устанавливаем позицию источника света
+    scene.add(pointLight);
 
-        function animate() {
-            requestAnimationFrame(animate);
-            if (model) {
-                model.rotation.y += 0.01;
-            }
-            controls.update();
-            renderer.render(scene, camera);
+    // Добавляем окружной свет (имитация освещения от неба и земли)
+    const hemisphereLight = new THREE.HemisphereLight(0x4040ff, 0xff4040, 0.6); // Голубой свет сверху и красноватый снизу, интенсивность 0.6
+    scene.add(hemisphereLight);
+
+    // Дополнительный направленный свет
+    const additionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // Интенсивность 0.5 для мягкого света
+    additionalLight.position.set(10, 10, -10); // Позиция света
+    scene.add(additionalLight);
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.minPolarAngle = Math.PI / 2;
+    controls.maxPolarAngle = Math.PI / 2;
+
+    let model;
+    const loader = new THREE.GLTFLoader();
+    loader.load('static/logo.glb', function (gltf) {
+        console.log('Model loaded:', gltf); // Проверяем загрузку модели
+        model = gltf.scene;
+        scene.add(model);
+        console.log('Model added to the scene:', model);
+    
+        // Логгируем размеры модели
+        const boundingBox = new THREE.Box3().setFromObject(model);
+        const size = boundingBox.getSize(new THREE.Vector3());
+        console.log('Model size:', size);
+    
+        // Если модель слишком большая или маленькая, масштабируем
+        const scale = 1 / Math.max(size.x, size.y, size.z);
+        model.scale.set(scale, scale, scale);
+    
+        // Наклон вперед по оси X
+        model.rotation.x = Math.PI / 4; 
+    
+        // Отступ модели от верха на 10vh
+        const offsetY = (window.innerHeight * 10) / 100;
+        model.position.y = size.y / 2.5 + offsetY / window.innerHeight;
+    
+        // Позиционируем и наклоняем камеру
+        camera.position.y = 2;  // Поднимаем камеру
+        camera.position.z = 5;  // Оставляем расстояние по оси Z
+        camera.lookAt(new THREE.Vector3(0, 0, 0));  // Камера смотрит на модель
+    }, undefined, function (error) {
+        console.error('Error loading model:', error); // Логгирование ошибки
+    });
+          
+
+    function animate() {
+        requestAnimationFrame(animate);
+        if (model) {
+            model.rotation.y += 0.01; // Анимация вращения
         }
-        animate();
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
     </script>
 </body>
 </html>

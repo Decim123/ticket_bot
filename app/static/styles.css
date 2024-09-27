@@ -1,0 +1,341 @@
+body {
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Запрет прокрутки страницы */
+    font-family: Pixelfy;
+}
+
+@font-face {
+    font-family: 'Pixelfy';
+    src: url('fonts/pixelfy/PixelifySans-SemiBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Анимация для подпрыгивания символов */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Анимация для переливания цвета */
+@keyframes colorChange {
+    0% {
+        color: #ff6600;
+    }
+    50% {
+        color: #fff;
+    }
+    100% {
+        color: #ff6600;
+    }
+}
+
+/* Применяем анимации к каждому символу */
+.bounce-text span {
+    display: inline-block;
+    animation: bounce 1s ease-in-out 5, colorChange 3s infinite;
+    animation-delay: calc(0.1s * var(--i));
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+#model-container {
+    width: 100%;
+    height: 40%;
+    background-color: #fff;
+    z-index: -10 !important;
+    position: relative;
+    pointer-events: auto;
+}
+
+canvas {
+    top: 50%;
+}
+
+.raffle-info {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+.raffle-name {
+    font-family: Arial, Helvetica, sans-serif;
+    position: fixed;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 150%;
+    font-weight: bold;
+    color: #666666b9;
+    text-align: center;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.raffle-date {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    position: absolute;
+    bottom: 0%;
+    left: 5%;
+    font-size: 90% !important;
+    text-align: left;
+    color: #666;
+    margin: 5px 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+    pointer-events: none;
+    top: 155%;
+}
+
+.raffle-tickets {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    top: 120%;
+    position: absolute;
+    bottom: 1%;
+    left: 10%;
+    transform: translateX(-50%);
+    font-size: 80% !important;
+    color: #666;
+    margin: 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+}
+.price-block {
+    position: absolute;
+    left: 5%;
+    top: 60%;
+    transform: translateY(-50%);
+}
+.price {
+    font-size: 6vh;
+    color: #000000;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#statusMessage {
+    position: absolute;
+    margin-top: 2%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.6vh;
+    color: #4140407e;
+    left: 52%;
+
+}
+
+.network {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0.5%;
+    font-size: 1.6vh;
+    color: #4140407e;
+}
+
+.button-block{
+    width: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center; /* Выравнивает элементы по центру по горизонтали */
+    align-items: center;
+    right: 5%;
+}
+
+.content {
+    height: 13vh;
+    display: flex;
+    justify-content: center; /* Выравнивает элементы по центру по горизонтали */
+    align-items: center;
+    border: solid;
+    background-color: #fafafa;
+    margin-top: -68vh;
+    position: relative;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+    width: 90%;
+    left: 5%;
+    border-radius: 20px;
+    border-color: #f8c04d;
+}
+
+.content h1 {
+    top: 10%;
+    font-size: 24px;
+    color: #ffffffd2;
+}
+
+/* Общие стили для всех кнопок */
+button {
+    font-family: Pixelfy;
+    font-size: 3vh;
+    padding: 0.2vh 1vh 0.7vh 1vh;
+    background-color: #fdbe38;
+    color: #000000;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid;
+    border-color: #000000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+/* Эффект при наведении на кнопку */
+button:hover {
+    background-color: #cf9a26;
+}
+
+/* Стили для кнопки "Проверить" */
+.secondary-button {
+    background-color: #9500fd;
+    color: #000000c0;
+    margin-left: 10%;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+.secondary-button:hover {
+    background-color: #7906ca;
+}
+
+
+
+/* Цвет текста при статусе suc */
+.status-suc h1 {
+    color: #ff6600;
+}
+
+#username {
+    position: absolute;
+    top: -65%;
+    color: #fafafa;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3vh;
+}
+
+/* Стили для контейнера прогресс-бара */
+.progress-bar-container {
+    top: 150%;
+    position: absolute;
+    display: flex;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 0.5vh;
+    margin: 0;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+/* Стили для прогресс-бара */
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    z-index: 3; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+/* Стили для заполненной части прогресс-бара */
+.progress {
+    height: 100%;
+    background-color: #f8c04d;
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+    z-index: 4; /* Установим z-index выше, чтобы перекрыть фон */
+}
+
+/* Стили для контейнера с логами */
+#log-container {
+    white-space: pre-wrap;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000000; /* Высокий z-index, чтобы он перекрывал все остальные элементы */
+    position: relative;
+    display: none;
+}
+
+.link-block {
+    border: solid;
+    background-color: #fafafa;
+    position: absolute;
+    z-index: 2; /* Установим z-index выше, чтобы перекрыть фон */
+    width: 90%;
+    left: 5%;
+    border-radius: 20px;
+    border-color: #f8c04d;
+    bottom: 2vh;
+    padding: 1vh 0;
+}
+
+.link {
+    margin: 2vh 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
+    position: relative !important;
+    text-align: left;
+    left: 5%;
+    width: 90%;
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Наследует цвет от родителя */
+}
+
+.link:hover {
+    color: #f8c04d; /* Цвет при наведении */
+}
+
+.link h1 {
+    width: 90%;
+    font-size: 3vh;
+    margin: 0;
+}
+
+.link h2 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    font-size: 2vh;
+    color: #4140407e;
+    width: 90%;
+}
+
+.link p {
+    font-family: Pixelfy;
+    margin: 0;
+    position: absolute;
+    top: 45%;
+    left: 95%;
+    transform: translateY(-50%);
+    font-size: 4vh;
+    text-align: right;
+}
+
+#stopMessage {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    top: 120%;
+    position: absolute;
+    bottom: 1%;
+    right: 0%;
+    transform: translateX(-30%);
+    font-size: 80% !important;
+    color: #666;
+    margin: 0;
+    z-index: 2;
+}
+
+#successMessage {
+    position: absolute;
+    font-size: 3vh;
+    right: 5%;
+}

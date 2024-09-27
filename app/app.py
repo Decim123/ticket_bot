@@ -10,10 +10,10 @@ from aiogram import Bot, Dispatcher, types, Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.storage.memory import MemoryStorage
-from quart import Quart, render_template, request, jsonify, redirect, url_for, send_file
+from quart import Quart, render_template, request, jsonify, redirect, url_for, send_file, send_from_directory
 from concurrent.futures import ThreadPoolExecutor
 
-# Задаем токены вашего бота и Crypto Pay API
+# Задаем токены бота и Crypto Pay API
 TELEGRAM_TOKEN = '7156172309:AAHfsAbC2fdefm2HxCuNQ3PT2rcOE4giuuk'
 CRYPTO_PAY_API_TOKEN = '256532:AAk84TvbgRtwSk3GS3ftQ6A4zvbyMSEMoTt'
 
@@ -36,6 +36,14 @@ LEXICON_EN = {
 # Инициализация Quart-приложения
 app = Quart(__name__)
 executor = ThreadPoolExecutor()
+
+# Указываем директорию для статических файлов
+app.static_folder = 'static'
+
+# Если вам нужно настроить собственный маршрут для доступа к статике
+@app.route('/static/<path:filename>')
+async def static_files(filename):
+    return await send_from_directory(app.static_folder, filename)
 
 def get_db_connection():
     conn = sqlite3.connect('app.db')
@@ -72,6 +80,14 @@ def create_settings_db():
         )
     ''')
     
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS ads (
+            name TEXT,
+            sub_name TEXT,
+            link TEXT
+        )
+    ''')
+
     # Проверяем, есть ли уже запись, если нет — создаем пустую запись
     cursor.execute('SELECT * FROM settings')
     if cursor.fetchone() is None:
@@ -106,6 +122,7 @@ def price_ton():
 
 @app.route('/')
 async def index():
+    ads = await get_ads()
     user_id = request.args.get('user_id')
     
     # Подключаемся к БД settings
@@ -166,7 +183,7 @@ async def index():
         conn.close()
         return await render_template('index.html', invoice_url=invoice_url, status=status, settings=settings_data)
     
-    return await render_template('index.html', settings=settings_data)
+    return await render_template('index.html', settings=settings_data, ads=ads)
 
 @app.route('/check_status/<int:tg_id>', methods=['GET'])
 async def check_status(tg_id):
@@ -300,10 +317,31 @@ async def check_payment(tg_id):
         print(f"Error during payment check: {e}")
         return jsonify({'error': str(e)})
 
+# Функция для получения рекламы из БД
+async def get_ads():
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT rowid, name, sub_name, link FROM ads")
+    ads = cursor.fetchall()
+    conn.close()
+    return ads
+
+# Маршрут для удаления рекламы
+@app.route('/delete_ad/<int:ad_id>', methods=['POST'])
+async def delete_ad(ad_id):
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM ads WHERE rowid = ?", (ad_id,))
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'success', 'message': 'Ad deleted'})
+
+
+
 @app.route('/admin', methods=['GET', 'POST'])
 async def admin():
     admin_pass = request.args.get('pass')
-
+    ads = await get_ads()
     conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
     cursor = conn.cursor()
 
@@ -335,7 +373,34 @@ async def admin():
     settings = cursor.fetchone()
     conn.close()
 
-    return await render_template('admin.html', settings=settings)
+    return await render_template('admin.html', settings=settings, ads=ads)
+
+# Функция для записи рекламной интеграции в БД
+def add_ad_to_db(name: str, sub_name: str, link: str):
+    conn = sqlite3.connect('/var/www/ticket_bot/setting.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO ads (name, sub_name, link)
+        VALUES (?, ?, ?)
+    ''', (name, sub_name, link))
+    conn.commit()
+    conn.close()
+
+# Маршрут для добавления рекламной интеграции
+@app.route("/add_ad_integration", methods=["POST"])
+async def add_ad_integration():
+    form = await request.form
+    name = form.get("ad_name")
+    sub_name = form.get("ad_description")
+    link = form.get("ad")
+    
+    if not name or not sub_name or not link:
+        return jsonify({"error": "Все поля должны быть заполнены"}), 400
+    
+    # Запись данных в таблицу ads
+    add_ad_to_db(name, sub_name, link)
+    
+    return jsonify({"message": "Integration was added"}), 200
 
 @app.route('/download_excel', methods=['GET'])
 async def download_excel():
@@ -450,7 +515,7 @@ async def main():
     await dp.start_polling(bot)
 
 def start_quart():
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=4000, debug=False)
 
 if __name__ == '__main__':
     quart_process = Process(target=start_quart)

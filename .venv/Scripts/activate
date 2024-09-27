@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="c:\projects\ticket_bot\.venv"
+VIRTUAL_ENV="c:\Users\Decim\OneDrive\Рабочий стол\ticket_bot-main\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
