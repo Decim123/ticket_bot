@@ -75,7 +75,7 @@ def create_settings_db():
             tickets_count INT,
             tickets_price FLOAT,
             date TEXT,
-            password TEXT DEFAULT '123',
+            password TEXT DEFAULT 'H3396,5@RUgafz4&z1332z',
             winner TEXT
         )
     ''')
@@ -93,7 +93,7 @@ def create_settings_db():
     if cursor.fetchone() is None:
         cursor.execute('''
             INSERT INTO settings (name, tickets_count, tickets_price, date, password, winner)
-            VALUES ('', 0, 0.0, '', '123', '')
+            VALUES ('', 0, 0.0, '', 'H3396,5@RUgafz4&z1332z', '')
         ''')
         conn.commit()
 
