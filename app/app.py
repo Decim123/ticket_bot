@@ -474,7 +474,7 @@ async def clear_users_db():
 # Обработка команды /start для Telegram бота
 @router.message(CommandStart())
 async def process_start_command(message: Message):
-    path_to_photo = "app/static/images/start.jpg"
+    path_to_photo = "app/static/start.jpg"
 
     # Создание клавиатуры с кнопками
     inline_kb = InlineKeyboardMarkup(inline_keyboard=[
