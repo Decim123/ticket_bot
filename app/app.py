@@ -35,6 +35,7 @@ LEXICON_EN = {
 
 # Инициализация Quart-приложения
 app = Quart(__name__)
+app.config['PROVIDE_AUTOMATIC_OPTIONS'] = False
 executor = ThreadPoolExecutor()
 
 # Указываем директорию для статических файлов
