@@ -342,6 +342,7 @@ async def delete_ad(ad_id):
 @app.route('/admin', methods=['GET', 'POST'])
 async def admin():
     admin_pass = request.args.get('pass')
+    print(admin_pass)
     ads = await get_ads()
     conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
@@ -351,6 +352,7 @@ async def admin():
     stored_password = cursor.fetchone()[0]
 
     if admin_pass != stored_password:
+        print('неверный пароль')
         return redirect(url_for('index'))
 
     if request.method == 'POST':
