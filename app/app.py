@@ -67,7 +67,7 @@ def create_users_table():
     conn.close()
 
 def create_settings_db():
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     
     cursor.execute('''
@@ -106,7 +106,7 @@ create_settings_db()
 
 # Функция для получения пароля из базы данных
 def get_admin_password():
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute('SELECT password FROM settings')
     password = cursor.fetchone()[0]
@@ -114,7 +114,7 @@ def get_admin_password():
     return password
 
 def price_ton():
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute('SELECT tickets_price FROM settings')
     price = cursor.fetchone()[0]
@@ -127,7 +127,7 @@ async def index():
     user_id = request.args.get('user_id')
     
     # Подключаемся к БД settings
-    settings_conn = sqlite3.connect('/ticket_bot/setting.db')
+    settings_conn = sqlite3.connect('/root/ticket_bot/setting.db')
     settings_cursor = settings_conn.cursor()
     
     # Извлекаем данные из таблицы settings
@@ -320,7 +320,7 @@ async def check_payment(tg_id):
 
 # Функция для получения рекламы из БД
 async def get_ads():
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute("SELECT rowid, name, sub_name, link FROM ads")
     ads = cursor.fetchall()
@@ -330,7 +330,7 @@ async def get_ads():
 # Маршрут для удаления рекламы
 @app.route('/delete_ad/<int:ad_id>', methods=['POST'])
 async def delete_ad(ad_id):
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute("DELETE FROM ads WHERE rowid = ?", (ad_id,))
     conn.commit()
@@ -343,7 +343,7 @@ async def delete_ad(ad_id):
 async def admin():
     admin_pass = request.args.get('pass')
     ads = await get_ads()
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
 
     # Проверяем пароль
@@ -378,7 +378,7 @@ async def admin():
 
 # Функция для записи рекламной интеграции в БД
 def add_ad_to_db(name: str, sub_name: str, link: str):
-    conn = sqlite3.connect('/ticket_bot/setting.db')
+    conn = sqlite3.connect('/root/ticket_bot/setting.db')
     cursor = conn.cursor()
     cursor.execute('''
         INSERT INTO ads (name, sub_name, link)
@@ -406,7 +406,7 @@ async def add_ad_integration():
 @app.route('/download_excel', methods=['GET'])
 async def download_excel():
     # Подключаемся к базе данных settings
-    settings_conn = sqlite3.connect('/ticket_bot/setting.db')
+    settings_conn = sqlite3.connect('/root/ticket_bot/setting.db')
     settings_cursor = settings_conn.cursor()
     settings_cursor.execute('SELECT * FROM settings')
     settings = settings_cursor.fetchone()
