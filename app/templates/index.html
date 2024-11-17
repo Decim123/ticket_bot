@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Добавляем стили для скрытия элементов по умолчанию */
+        #successMessage, #stopMessage, .button-block {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div id="model-container"></div>
@@ -15,7 +21,6 @@
         <div class="raffle-info">
         </div>
         <h2 class="raffle-name">Платный сыр</h2> <!-- Название розыгрыша -->
-        
         
         <!-- Количество билетов -->
         <p class="raffle-tickets">{{ settings['remaining_tickets'] }} / {{ settings['tickets_count'] }}</p>
@@ -26,17 +31,20 @@
             </div>
         </div>
 
-        <p class="raffle-date">Дата завершения - {{ settings['date'] }}<br>или раньше, если будет набрано необходимое количство учасников</br></p> <!-- Дата окончания розыгрыша -->
+        <p class="raffle-date">Дата завершения - {{ settings['date'] }}<br>или раньше, если будет набрано необходимое количество участников</p> <!-- Дата окончания розыгрыша -->
 
         <!-- Логика отображения кнопок или сообщения "Сыр закончился" -->
         <div class='price-block'>
-            <p class = 'price'>{{ settings['tickets_price'] }}</p>
+            <p class='price'>{{ settings['tickets_price'] }}</p>
             <p class='network'>network ton</p>
         </div>
         {% if settings['remaining_tickets'] > 0 %}
             <div class='button-block'>
                 <div><button id="buyButton">pay</button></div>
-                <div><button id="checkPaymentButton" class="secondary-button">check</button><p id="statusMessage"></p></div>
+                <div>
+                    <button id="checkPaymentButton" class="secondary-button">check</button>
+                    <p id="statusMessage"></p>
+                </div>
             </div>
         {% else %}
             <p id="stopMessage">Сыр закончился</p>
@@ -46,12 +54,11 @@
     
     <div class='link-block'>
         {% for ad in ads %}
-        <a href={{ ad[3] }} class='link'>
+        <a href="{{ ad[3] }}" class='link'>
             <p>></p>
             <h1>{{ ad[1] }}</h1>
             <h2>{{ ad[2] }}</h2>
         </a>
-        
         {% endfor %}
     </div>
     
@@ -83,22 +90,24 @@
         const stopMessage = document.getElementById('stopMessage');
         const buyButton = document.getElementById('buyButton');
         const checkPaymentButton = document.getElementById('checkPaymentButton');
+
         if (usernameElement) {
             console.log('1 Element найден:', usernameElement);
-            
         } else {
             console.log('Element не найден');
         }
+
         if (successMessage) {
-            console.log('Element найден:', usernameElement);
+            console.log('Element найден:', successMessage);
         } else {
             console.log('Element не найден');
         }
+
         if (tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
             const userId = user.id;
             const username = user.username ? `${user.username}` : '';
-            usernameElement.textContent = username
+            usernameElement.textContent = username;
             logToScreen('Fetching status for user: ' + username);
 
             fetch(`/check_status/${userId}?username=${encodeURIComponent(username)}`)
@@ -109,8 +118,10 @@
                         usernameElement.classList.add('bounce-text');
                         if (buyButton) buyButton.style.display = 'none';
                         if (checkPaymentButton) checkPaymentButton.style.display = 'none';
-                        statusMessage.textContent = '';
+                        if (statusMessage) statusMessage.textContent = '';
+                        if (stopMessage) stopMessage.style.display = 'none';
                         successMessage.textContent = 'Я участвую!';
+                        successMessage.style.display = 'block'; // Показываем сообщение
                         const fullText = `${user.username || user.first_name}`;
                         if (fullText) {
                             console.log('2 fullText найден:', fullText);
@@ -126,11 +137,18 @@
                         }
                         
                     } else if (data.status === 'no_tickets') {
-                        statusMessage.textContent = '';
+                        if (buyButton) buyButton.style.display = 'none';
+                        if (checkPaymentButton) checkPaymentButton.style.display = 'none';
+                        if (statusMessage) statusMessage.textContent = '';
+                        if (successMessage) successMessage.style.display = 'none';
                         stopMessage.textContent = 'Сыр закончился';
+                        stopMessage.style.display = 'block'; // Показываем сообщение
                     } else {
-                        successMessage.textContent = 'Я не участвую!';
+                        successMessage.style.display = 'none'; // Скрываем сообщение
+                        if (stopMessage) stopMessage.style.display = 'none';
                         usernameElement.textContent = `${user.username || user.first_name}`;
+                        const buttonBlock = document.querySelector('.button-block');
+                        if (buttonBlock) buttonBlock.style.display = 'block'; // Показываем кнопки
 
                         if (buyButton) {
                             buyButton.addEventListener('click', () => {
@@ -155,12 +173,12 @@
                                 .then(data => {
                                     logToScreen('Payment check response: ' + JSON.stringify(data));
                                     if (data.status === 'suc') {
-                                        statusMessage.textContent = 'Оплачено!';
+                                        if (statusMessage) statusMessage.textContent = 'Оплачено!';
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 2000);
                                     } else if (data.status === 'not_paid') {
-                                        statusMessage.textContent = 'Не оплачено';
+                                        if (statusMessage) statusMessage.textContent = 'Не оплачено';
                                     }
                                 })
                                 .catch(error => {
@@ -172,14 +190,28 @@
                 })
                 .catch(error => {
                     logToScreen('Error fetching status: ' + error);
+                    // В случае ошибки можно отобразить сообщение или скрыть кнопки
+                    if (buyButton) buyButton.style.display = 'none';
+                    if (checkPaymentButton) checkPaymentButton.style.display = 'none';
+                    if (successMessage) successMessage.style.display = 'none';
+                    if (stopMessage) stopMessage.style.display = 'none';
+                    if (statusMessage) statusMessage.textContent = 'Произошла ошибка. Пожалуйста, попробуйте позже.';
                 });
+        } else {
+            logToScreen('Пользователь не найден.');
+            // Можно скрыть кнопки или отобразить сообщение
+            if (buyButton) buyButton.style.display = 'none';
+            if (checkPaymentButton) checkPaymentButton.style.display = 'none';
+            if (successMessage) successMessage.style.display = 'none';
+            if (stopMessage) stopMessage.style.display = 'none';
+            if (statusMessage) statusMessage.textContent = 'Пользователь не найден.';
         }
 
     // 3D-модель и анимация
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('model-container').appendChild(renderer.domElement);
 
@@ -234,7 +266,7 @@
     
         // Отступ модели от верха на 10vh
         const offsetY = (window.innerHeight * 10) / 100;
-        model.position.y = size.y / 2.5 + offsetY / window.innerHeight;
+        model.position.y = size.y / 2.5 + (offsetY / window.innerHeight) * 5; // Корректировка позиции Y
     
         // Позиционируем и наклоняем камеру
         camera.position.y = 2;  // Поднимаем камеру
